@@ -1,0 +1,36 @@
+{
+  "name": "rightcapital/mycontainer",
+  "description": "The Illuminate Container package.",
+  "license": "MIT",
+  "homepage": "http://www.rightcapital.com",
+  "support": {
+  },
+  "authors": [
+    {
+      "name": "Taylor Otwell",
+      "email": "taylor@laravel.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "MyRightCapital\\Container\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MyRightCapital\\Container\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "require-dev": {
+    "phpunit/phpunit": "^5.5"
+  }
+}
