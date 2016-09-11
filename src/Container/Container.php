@@ -408,6 +408,23 @@ class Container implements ArrayAccess, ContainerInterface
     public function instance($abstract, $instance)
     {
         // TODO: Implement instance() method.
+        $abstract = $this->normalize($abstract);
+
+        if (is_array($abstract)) {
+            list($abstract, $alias) = $this->extractAlias($abstract);
+
+            $this->alias($abstract, $alias);
+        }
+        
+        unset($this->aliases[$abstract]);
+        
+        $bound = $this->bound($abstract);
+        
+        $this->instances[$abstract] = $instance;
+        
+        if ($bound) {
+            $this->rebound($abstract);
+        }
     }
 
     /**
@@ -492,5 +509,28 @@ class Container implements ArrayAccess, ContainerInterface
     public function afterResolving($abstract, Closure $callback = null)
     {
         // TODO: Implement afterResolving() method.
+    }
+
+    /**
+     * Dynamically access container services. 
+     * 
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this[$key];
+    }
+
+    /**
+     * Dynamically set container services.
+     * 
+     * @param $key
+     * @param $value
+     */
+    public function __set($key, $value)
+    {
+        $this[$key] = $value;
     }
 }
