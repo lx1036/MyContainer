@@ -104,7 +104,11 @@ class Application extends Container implements ApplicationInterface, HttpKernelI
     }
 
     /**
-     * @param $provider
+     * Get the registered service provider if th exists.
+     * 
+     * @param \MyRightCapital\Support\ServiceProvider|string $provider
+     * 
+     * @return \MyRightCapital\Support\ServiceProvider|null
      */
     public function getProvider($provider)
     {
