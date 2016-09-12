@@ -122,3 +122,28 @@ then();
  *
  *
  */
+
+
+$pipes = [
+    'Pipe1',
+    'Pipe2',
+    'Pipe3',
+    'Pipe4',
+    'Pipe5',
+    'Pipe6',
+];
+
+$pipes = array_reverse($pipes);
+
+//var_dump($pipes);
+
+
+function rsum($v, $w)
+{
+    $v += $w;
+    return $v;
+}
+
+$a = [1, 2, 3, 4, 5];
+$b = array_reduce($a, "rsum", 10);
+echo $b . PHP_EOL;
