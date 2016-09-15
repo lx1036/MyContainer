@@ -147,3 +147,8 @@ function rsum($v, $w)
 $a = [1, 2, 3, 4, 5];
 $b = array_reduce($a, "rsum", 10);
 echo $b . PHP_EOL;
+
+/**
+ * Laravel Pipeline Procedure
+ */
+
