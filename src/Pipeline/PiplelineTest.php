@@ -2,72 +2,139 @@
 
 interface Middleware
 {
-    public static function handle(Closure $closure);
+    public static function handle($request, Closure $closure);
 }
 
-class Pipe1 implements Middleware
+class CheckForMaintenanceMode implements Middleware
 {
-    public static function handle(Closure $next)
+    public static function handle($request, Closure $next)
     {
-        // TODO: Implement handle() method.
-        echo 'pipe1' . PHP_EOL;
-        $next();
+        echo $request . ': Check if the application is in the maintenance status.' . PHP_EOL;
+        $next($request);
     }
 }
 
-class Pipe23 implements Middleware
+class AddQueuedCookiesToResponse implements Middleware
 {
-    public static function handle(Closure $next)
+    public static function handle($request, Closure $next)
     {
-        // TODO: Implement handle() method.
-        echo 'pipe2' . PHP_EOL;
-        $next();
-        echo 'pipe3' . PHP_EOL;
+        $next($request);
+        echo $request . ': Add queued cookies to the response.' . PHP_EOL;
     }
 }
 
-class Pipe4 implements Middleware
+class StartSession implements Middleware
 {
-    public static function handle(Closure $next)
+    public static function handle($request, Closure $next)
     {
-        // TODO: Implement handle() method.
-        $next();
-        echo 'pipe4' . PHP_EOL;
+        echo $request . ': Start session of this request.' . PHP_EOL;
+        $next($request);
+        echo $request . ': Close session of this response.' . PHP_EOL;
     }
 }
 
-function getSlice()
+class ShareErrorsFromSession implements Middleware
 {
-    return function ($stack, $pipe) {
-        return function () use ($stack, $pipe) {
-            /**
-             * @var Middleware $pipe
-             */
-            return $pipe::handle($stack);
+    public static function handle($request, Closure $next)
+    {
+        $next($request);
+        echo $request . ': Share the errors variable from response to the views.' . PHP_EOL;
+    }
+}
+
+class VerifyCsrfToken implements Middleware
+{
+    public static function handle($request, Closure $next)
+    {
+        echo $request . ': Verify csrf token when post request.' . PHP_EOL;
+        $next($request);
+    }
+}
+
+class Pipeline 
+{
+    /**
+     * @var array
+     */
+    protected $middlewares = [];
+
+    /**
+     * @var int
+     */
+    protected $request;
+
+    // Get the initial slice
+    function getInitialSlice(Closure $destination)
+    {
+        return function ($passable) use ($destination) {
+            return call_user_func($destination, $passable);
         };
+    }
+    
+    // Get the slice in every step.
+    function getSlice()
+    {
+        return function ($stack, $pipe) {
+            return function ($passable) use ($stack, $pipe) {
+                /**
+                 * @var Middleware $pipe
+                 */
+                return call_user_func_array([$pipe, 'handle'], [$passable, $stack]);
+            };
+        };
+    }
+    
+    // When process the Closure, send it as parameters. Here, input an int number.
+    function send(int $request)
+    {
+        $this->request = $request;
+        return $this;
+    }
 
-    };
+    // Get the middlewares array.
+    function through(array $middlewares)
+    {
+        $this->middlewares = $middlewares;
+        return $this;
+    }
+    
+    // Run the Filters.
+    function then(Closure $destination)
+    {
+        $firstSlice = $this->getInitialSlice($destination);
+    
+        $pipes = array_reverse($this->middlewares);
+        
+        $run = array_reduce($pipes, $this->getSlice(), $firstSlice);
+    
+        return call_user_func($run, $this->request);
+    }
 }
 
-function then()
+
+/**
+ * @return \Closure
+ */
+function dispatchToRouter()
 {
-    $pipes = [
-        Pipe1::class,
-        Pipe23::class,
-        Pipe4::class,
-    ];
-
-    $firstSlice = function () {
-        echo 'pipe0' . PHP_EOL;
+    return function ($request) {
+        echo $request . ': Send Request to the Kernel, and Return Response.' . PHP_EOL;
     };
-
-    $pipes = array_reverse($pipes);
-    $run = array_reduce($pipes, getSlice(), $firstSlice);
-
-    $run();
 }
 
-then();
+$request = 10;
+
+$middlewares = [
+    CheckForMaintenanceMode::class,
+    AddQueuedCookiesToResponse::class,
+    StartSession::class,
+    ShareErrorsFromSession::class,
+    VerifyCsrfToken::class,
+];
+
+(new Pipeline())->send($request)->through($middlewares)->then(dispatchToRouter());
+
+    
 
 /**
  * 1. $stack_1
@@ -124,6 +191,9 @@ then();
  */
 
 
+
+
+/*
 $pipes = [
     'Pipe1',
     'Pipe2',
@@ -137,7 +207,14 @@ $pipes = array_reverse($pipes);
 
 //var_dump($pipes);
 
-
+/**
+ * @link http://php.net/manual/zh/function.array-reduce.php
+ * @param int $v
+ * @param int $w
+ *
+ * @return int
+ */
+/*
 function rsum($v, $w)
 {
     $v += $w;
@@ -152,3 +229,66 @@ echo $b . PHP_EOL;
  * Laravel Pipeline Procedure
  */
 
+/*
+class TestCallUserFunc
+{
+    public function index($request)
+    {
+        echo $request . PHP_EOL;
+    }
+}
+
+/**
+ * @param $test
+ */
+/*
+function testCallUserFunc($test)
+{
+    echo $test . PHP_EOL;
+}
+
+// [$class, $method]
+call_user_func(['TestCallUserFunc', 'index'], 'pipes');
+// Closure
+call_user_func(function ($passable) {
+    echo $passable . PHP_EOL;
+}, 'pipes');
+// function
+call_user_func('testCallUserFunc' , 'pipes');
+
+
+class TestCallUserFuncArray
+{
+    public function index($request)
+    {
+        echo $request . PHP_EOL;
+    }
+}
+
+/**
+ * @param $test
+ */
+/*
+function testCallUserFuncArray($test)
+{
+    echo $test . PHP_EOL;
+}
+
+// [$class, $method]
+call_user_func_array(['TestCallUserFuncArray', 'index'], ['pipes']);
+
+// Closure
+call_user_func_array(function ($passable) {
+    echo $passable . PHP_EOL;
+}, ['pipes']);
+
+// function
+call_user_func_array('testCallUserFuncArray' , ['pipes']);
+
+
+
+//call_user_func_array();
+
+
+
+// Decorator Pattern

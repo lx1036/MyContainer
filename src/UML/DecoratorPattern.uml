@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\MyRightCapital\Development\DecoratorPattern\Client</OriginalElement>
+  <nodes>
+    <node x="802.3451016826675" y="107.92990605966759">\MyRightCapital\Development\DecoratorPattern\CheckForMaintenanceMode</node>
+    <node x="652.3451016826675" y="96.92990605966759">\MyRightCapital\Development\DecoratorPattern\StartSession</node>
+    <node x="568.3451016826675" y="415.9299060596676">\MyRightCapital\Development\DecoratorPattern\Request</node>
+    <node x="481.3451016826675" y="176.9299060596676">\MyRightCapital\Development\DecoratorPattern\AddQueuedCookiesToResponse</node>
+    <node x="424.66243419015177" y="415.0295241044699">\MyRightCapital\Development\DecoratorPattern\Client</node>
+    <node x="852.3451016826675" y="264.9299060596676">\MyRightCapital\Development\DecoratorPattern\VerifyCsrfToken</node>
+    <node x="641.3451016826675" y="323.9299060596676">\MyRightCapital\Development\DecoratorPattern\IRequest</node>
+    <node x="722.3451016826675" y="393.9299060596676">\MyRightCapital\Development\DecoratorPattern\ShareErrorsFromSession</node>
+    <node x="704.3451016826675" y="246.9299060596676">\MyRightCapital\Development\DecoratorPattern\IMiddleware</node>
+  </nodes>
+  <notes>
+    <note x="410.8506245483638" y="487.39114276865894">
+      <node>\MyRightCapital\Development\DecoratorPattern\Client</node>
+      <value>Call Request</value>
+      <edge>
+        <point x="0.0" y="0.0" />
+        <point x="0.0" y="0.0" />
+      </edge>
+    </note>
+  </notes>
+  <edges>
+    <edge source="\MyRightCapital\Development\DecoratorPattern\ShareErrorsFromSession" target="\MyRightCapital\Development\DecoratorPattern\IMiddleware">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\MyRightCapital\Development\DecoratorPattern\CheckForMaintenanceMode" target="\MyRightCapital\Development\DecoratorPattern\IMiddleware">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\MyRightCapital\Development\DecoratorPattern\StartSession" target="\MyRightCapital\Development\DecoratorPattern\IMiddleware">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\MyRightCapital\Development\DecoratorPattern\Request" target="\MyRightCapital\Development\DecoratorPattern\IRequest">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\MyRightCapital\Development\DecoratorPattern\IRequest" target="\MyRightCapital\Development\DecoratorPattern\IMiddleware">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\MyRightCapital\Development\DecoratorPattern\VerifyCsrfToken" target="\MyRightCapital\Development\DecoratorPattern\IMiddleware">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="\MyRightCapital\Development\DecoratorPattern\AddQueuedCookiesToResponse" target="\MyRightCapital\Development\DecoratorPattern\IMiddleware">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9078725398313027" x="610.8137710333436" y="277.8496954681532" />
+  <SelectedNodes />
+  <Categories />
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
