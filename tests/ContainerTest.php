@@ -152,48 +152,48 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class ContainerConcreteStub
-{
+//class ContainerConcreteStub
+//{
+//
+//}
+//
+//interface IContainerStub
+//{
+//
+//}
+//
+//class ContainerImplementationStub implements IContainerStub
+//{
+//
+//}
 
-}
+//class ContainerImplementationStubTwo implements IContainerStub
+//{
+//
+//}
 
-interface IContainerStub
-{
-
-}
-
-class ContainerImplementationStub implements IContainerStub
-{
-
-}
-
-class ContainerImplementationStubTwo implements IContainerStub
-{
-
-}
-
-class ContainerDependentStub
-{
-    /**
-     * @var \MyRightCapital\Container\Tests\IContainerStub
-     */
-    public $stub;
-
-    public function __construct(IContainerStub $stub)
-    {
-        $this->stub = $stub;
-    }
-}
-
-class ContainerNestedDependentStub
-{
-    /**
-     * @var \MyRightCapital\Container\Tests\ContainerDependentStub
-     */
-    public $inner;
-
-    public function __construct(ContainerDependentStub $stub)
-    {
-        $this->inner = $stub;
-    }
-}
+//class ContainerDependentStub
+//{
+//    /**
+//     * @var \MyRightCapital\Container\Tests\IContainerStub
+//     */
+//    public $stub;
+//
+//    public function __construct(IContainerStub $stub)
+//    {
+//        $this->stub = $stub;
+//    }
+//}
+//
+//class ContainerNestedDependentStub
+//{
+//    /**
+//     * @var \MyRightCapital\Container\Tests\ContainerDependentStub
+//     */
+//    public $inner;
+//
+//    public function __construct(ContainerDependentStub $stub)
+//    {
+//        $this->inner = $stub;
+//    }
+//}
