@@ -7,8 +7,8 @@
   },
   "authors": [
     {
-      "name": "Taylor Otwell",
-      "email": "taylor@laravel.com"
+      "name": "Xiang Liu",
+      "email": "xiang.liu@rightcapital.com"
     }
   ],
   "require": {
@@ -30,7 +30,6 @@
       "dev-master": "1.0-dev"
     }
   },
-  "minimum-stability": "dev",
   "require-dev": {
     "phpunit/phpunit": "^5.5",
     "mockery/mockery": "^0.9.5"
