@@ -33,6 +33,5 @@
   "require-dev": {
     "phpunit/phpunit": "^5.5",
     "mockery/mockery": "^0.9.5"
-  },
-  "minimum-stability": "dev"
+  }
 }
